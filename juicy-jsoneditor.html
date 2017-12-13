@@ -51,12 +51,12 @@ version: 1.2.0
                 },
                 ready: function(){
                     //Adding styles bypassing Polymer scoping
-                    var url = Polymer.ResolveUrl.resolveUrl("../jsoneditor/dist/jsoneditor.min.css", script.ownerDocument.baseURI);
-                    var style = document.createElement("style");
+                    // var url = Polymer.ResolveUrl.resolveUrl("../jsoneditor/dist/jsoneditor.min.css", script.ownerDocument.baseURI);
+                    // var style = document.createElement("style");
 
-                    style.classList.add("juicy-jsoneditor-styles");
-                    style.innerHTML = ["@import url('", url, "');"].join("");
-                    Polymer.dom(this.root).appendChild(style);
+                    // style.classList.add("juicy-jsoneditor-styles");
+                    // style.innerHTML = ["@import url('", url, "');"].join("");
+                    // Polymer.dom(this.root).appendChild(style);
 
                     // Inject ACE themes and css added dynamically to the main document.
                     if(this.shadowRoot){
