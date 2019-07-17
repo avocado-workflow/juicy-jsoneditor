@@ -13,6 +13,26 @@ version: 1.2.0
     but is executed async, and we need it before to prevent FOUC -->
 <script src="../jsoneditor/src/js/ace/theme-jsoneditor.js"></script>
 
+<link rel="stylesheet" href="../jsoneditor/dist/jsoneditor.min.css" class="juicy-jsoneditor-styles">
+
+<script>
+    var currentScript = document._currentScript || document.currentScript;
+    var ownerDocument = currentScript.ownerDocument;
+    var baseUrl = ownerDocument.baseURI;
+
+    if (baseUrl.indexOf('juicy-jsoneditor') !== -1) {
+        var style = ownerDocument.querySelector('link[rel=stylesheet].juicy-jsoneditor-styles');
+        if(absoluteUrl) {
+            var absoluteUrl = new URL(style.href, baseUrl);
+            style.href = absoluteUrl.href;
+            document.head.appendChild(style);
+        } else {
+            console.log('juicyjsoneditor style link not found in document')
+        }
+
+    }
+</script>
+
 <!-- Define your custom element -->
 <dom-module id="juicy-jsoneditor">
     <template>
@@ -30,7 +50,6 @@ version: 1.2.0
     <script>
         (function () {
             var JSONEditorAPI = ["set", "setMode", "setName", "setText", "get", "getName", "getText"];
-            var script = document._currentScript || document.currentScript;
 
             Polymer({
                 is: 'juicy-jsoneditor',
@@ -63,7 +82,7 @@ version: 1.2.0
                         this.injectTheme('#ace_editor\\.css');
                         this.injectTheme('#ace-tm');
                         this.injectTheme('#ace_searchbox');
-                        ace.config.loadModule(['theme', 'ace/theme/jsoneditor'], ()=>{
+                        ace.config.loadModule(['theme', 'ace/theme/jsoneditor'], function () {
                             this.injectTheme('#ace-jsoneditor');
                         });
                     }
@@ -212,7 +231,7 @@ version: 1.2.0
                         }
                     }
                 },
-                injectTheme(themeId){
+                injectTheme: function(themeId){
                     var n = document.querySelector(themeId);
                     this.shadowRoot.appendChild(cloneStyle(n));
                 }
